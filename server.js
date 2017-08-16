@@ -3,11 +3,20 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
 // Get our API routes
 const api = require('./server/routes/api');
-
 const app = express();
+
+// mongo setup
+var url = 'mongodb://admin:admin@ds145750.mlab.com:45750/example';
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected correctly to mlab.");
+  db.close();
+});
 
 // Parsers for POST data
 app.use(bodyParser.json());
